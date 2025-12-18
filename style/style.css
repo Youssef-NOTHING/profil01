@@ -507,7 +507,7 @@ body {
 
 .hero p {
   margin: 15px 0;
-  color: #f0f0f0;
+  color: #4b5563;
   font-size: 1.15rem;
   animation: fadeInDown 0.8s ease-out 0.4s both;
   position: relative;
@@ -1325,7 +1325,6 @@ section p {
     height: 260px;
     transform: none;
   }
-}
 
   .stats-banner {
     padding: 50px 24px;
@@ -1336,7 +1335,7 @@ section p {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 30px;
   }
-
+}
 
 .stat-item {
   text-align: center;
