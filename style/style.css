@@ -40,6 +40,81 @@
   align-items: center;
 }
 
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 6px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: #1f2937;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: fixed;
+    left: -100%;
+    top: 70px;
+    flex-direction: column;
+    background-color: white;
+    width: 100%;
+    text-align: left;
+    transition: 0.3s;
+    box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+    padding: 20px 0;
+    gap: 0;
+    z-index: 999;
+  }
+
+  .nav-menu.active {
+    left: 0;
+  }
+
+  .nav-menu li {
+    padding: 15px 30px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .nav-menu li:last-child {
+    border-bottom: none;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+  }
+
+  .nav-contact {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 12px 30px !important;
+    margin: 10px 30px 0 30px !important;
+    display: block;
+    text-align: center;
+    border-radius: 25px;
+  }
+}
+
 .nav-link {
   text-decoration: none;
   color: #4b5563;
@@ -394,8 +469,8 @@ body {
 
 .profile-pic {
   width: 100%;
-  max-width: 380px;
-  height: 480px;
+  max-width: 350px;
+  height: 450px;
   border-radius: 0;
   object-fit: cover;
   box-shadow: none;
@@ -1186,7 +1261,8 @@ section p {
 
 @media (max-width: 900px) {
   .hero {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 40px;
     padding: 100px 24px 80px;
     min-height: auto;
@@ -1196,6 +1272,7 @@ section p {
     align-items: center;
     text-align: center;
     padding-right: 0;
+    order: 1;
   }
 
   .cringe-badges {
@@ -1220,13 +1297,35 @@ section p {
 
   .hero-right {
     justify-content: center;
+    display: flex;
+    align-items: center;
+    grid-column: auto;
+    margin-top: 20px;
+    order: 2;
   }
 
   .profile-pic {
-    max-width: 320px;
-    height: 420px;
+    max-width: 240px;
+    height: 320px;
     transform: none;
   }
+}
+
+@media (max-width: 600px) {
+  .profile-pic {
+    max-width: 200px;
+    height: 280px;
+    transform: none;
+  }
+}
+
+@media (max-width: 375px) {
+  .profile-pic {
+    max-width: 180px;
+    height: 260px;
+    transform: none;
+  }
+}
 
   .stats-banner {
     padding: 50px 24px;
