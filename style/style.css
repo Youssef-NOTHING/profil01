@@ -31,6 +31,19 @@
   font-weight: 800;
   color: #1f2937;
   letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
 }
 
 .nav-menu {
@@ -159,6 +172,10 @@
 
   .logo {
     font-size: 1.25rem;
+  }
+
+  .logo-img {
+    height: 38px;
   }
 
   .nav-menu {
@@ -2511,6 +2528,10 @@ section p {
   .nav-container {
     padding: 10px 12px;
     gap: 8px;
+  }
+
+  .logo-img {
+    height: 32px;
   }
 
   .menu-toggle {
