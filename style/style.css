@@ -2529,3 +2529,55 @@ section p {
     font-size: 0.9rem;
   }
 }
+
+@media (max-width: 375px) {
+  .contact-container {
+    padding: 35px 14px;
+  }
+
+  .contact-info {
+    gap: 18px;
+  }
+
+  .contact-item {
+    gap: 12px;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .contact-icon {
+    font-size: 1.3rem;
+    padding: 9px;
+    min-width: 48px;
+    height: 48px;
+  }
+
+  .contact-item h4 {
+    font-size: 0.88rem;
+    margin-bottom: 4px;
+  }
+
+  .contact-item a {
+    font-size: 0.82rem;
+  }
+
+  .contact-cta {
+    padding: 28px 20px;
+    border-radius: 13px;
+  }
+
+  .contact-cta h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+
+  .contact-cta p {
+    font-size: 0.88rem;
+    margin-bottom: 18px;
+  }
+
+  .cta-button {
+    padding: 11px 24px;
+    font-size: 0.92rem;
+  }
+}
