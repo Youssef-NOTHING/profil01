@@ -2190,6 +2190,56 @@ section p {
   .faq-section {
     padding: 64px 18px;
   }
+
+  .contact-container {
+    padding: 40px 18px;
+  }
+
+  .contact-intro {
+    font-size: 1rem;
+    margin-bottom: 30px;
+  }
+
+  .contact-item {
+    gap: 12px;
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .contact-icon {
+    font-size: 1.5rem;
+    padding: 10px;
+    min-width: 50px;
+    height: 50px;
+  }
+
+  .contact-item h4 {
+    font-size: 0.95rem;
+  }
+
+  .contact-item a {
+    font-size: 0.9rem;
+  }
+
+  .contact-cta {
+    padding: 35px 25px;
+    border-radius: 15px;
+  }
+
+  .contact-cta h3 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+
+  .contact-cta p {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+
+  .cta-button {
+    padding: 12px 28px;
+    font-size: 0.95rem;
+  }
 }
 
 .contact-info {
@@ -2426,6 +2476,56 @@ section p {
     max-width: 260px;
     text-align: center;
     padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .contact-container {
+    padding: 30px 12px;
+  }
+
+  .contact-intro {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+
+  .contact-item {
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .contact-icon {
+    font-size: 1.25rem;
+    padding: 8px;
+    min-width: 45px;
+    height: 45px;
+  }
+
+  .contact-item h4 {
+    font-size: 0.85rem;
+  }
+
+  .contact-item a {
+    font-size: 0.8rem;
+    word-break: break-word;
+  }
+
+  .contact-cta {
+    padding: 25px 18px;
+    border-radius: 12px;
+  }
+
+  .contact-cta h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .contact-cta p {
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+  }
+
+  .cta-button {
+    padding: 10px 20px;
     font-size: 0.9rem;
   }
 }
