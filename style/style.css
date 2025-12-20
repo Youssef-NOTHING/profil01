@@ -1318,6 +1318,65 @@ section p {
   font-weight: 600;
 }
 
+.projects-summary {
+  max-width: 1200px;
+  margin: 80px auto 0;
+  padding: 60px 40px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+  border-radius: 25px;
+  text-align: center;
+}
+
+.projects-summary h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 50px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+.summary-card {
+  background: white;
+  padding: 35px 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.summary-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.summary-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.summary-card h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.summary-card p {
+  font-size: 0.95rem;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
 /* Journey Section */
 #basketball {
   background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
@@ -2189,6 +2248,36 @@ section p {
   .pricing-section,
   .faq-section {
     padding: 64px 18px;
+  }
+
+  .projects-summary {
+    margin: 60px 18px 0;
+    padding: 40px 18px;
+  }
+
+  .projects-summary h3 {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+  }
+
+  .summary-grid {
+    gap: 20px;
+  }
+
+  .summary-card {
+    padding: 25px 20px;
+  }
+
+  .summary-icon {
+    font-size: 2rem;
+  }
+
+  .summary-card h4 {
+    font-size: 1rem;
+  }
+
+  .summary-card p {
+    font-size: 0.9rem;
   }
 
   .contact-container {
