@@ -12,12 +12,7 @@
 <nav class="navbar">
   <div class="nav-container">
     <div class="logo">Portfolio</div>
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-    <ul class="nav-menu" id="navMenu">
+    <ul class="nav-menu">
       <li><a href="#about" class="nav-link">About</a></li>
       <li><a href="#services" class="nav-link">Services</a></li>
       <li><a href="#projects" class="nav-link">Projects</a></li>
@@ -124,7 +119,7 @@
   <h2>What I Offer</h2>
   <p class="section-subtitle">Transform your vision into reality with professional services</p>
   <div class="services-grid">
-    <div class="service-card">
+    <div class="service-card" data-service="content" onclick="filterProjects('content')">
       <div class="service-icon">🎬</div>
       <h3>Content Creation</h3>
       <p>High-quality video editing, sports highlights, and social media content that captures attention and tells your story.</p>
@@ -133,8 +128,10 @@
         <li>✓ Social Media Reels</li>
         <li>✓ Video Editing</li>
       </ul>
+      <div class="view-projects-hint">Click to see projects →</div>
     </div>
-    <div class="service-card">
+    <div class="service-card" data-service="design" onclick="filterProjects('design')">
+      
       <div class="service-icon">🎨</div>
       <h3>Graphic Design</h3>
       <p>Eye-catching designs for personal branding, social media posts, and promotional materials that stand out.</p>
@@ -143,8 +140,9 @@
         <li>✓ Social Graphics</li>
         <li>✓ Poster Design</li>
       </ul>
+      <div class="view-projects-hint">Click to see projects →</div>
     </div>
-    <div class="service-card">
+    <div class="service-card" data-service="web" onclick="filterProjects('web')">
       <div class="service-icon">🌐</div>
       <h3>Portfolio Websites</h3>
       <p>Modern, responsive websites that showcase your talents and help you build a powerful online presence.</p>
@@ -153,8 +151,9 @@
         <li>✓ Mobile Responsive</li>
         <li>✓ Fast & Secure</li>
       </ul>
+      <div class="view-projects-hint">Click to see projects →</div>
     </div>
-    <div class="service-card">
+    <div class="service-card" data-service="coaching" onclick="filterProjects('coaching')">
       <div class="service-icon">🧠</div>
       <h3>Coaching & Mindset</h3>
       <p>Personal development coaching drawing from athletic discipline to help you achieve your goals.</p>
@@ -163,6 +162,7 @@
         <li>✓ Personal Branding</li>
         <li>✓ Growth Strategy</li>
       </ul>
+      <div class="view-projects-hint">Click to see projects →</div>
     </div>
   </div>
 </section>
@@ -170,9 +170,24 @@
 <section id="projects">
   <h2>Featured Work</h2>
   <p class="section-subtitle">Recent projects that showcase creativity and technical excellence</p>
+  <div class="project-filter">
+    <button class="filter-btn active" onclick="filterProjects('all')">All Projects</button>
+    <button class="filter-btn" onclick="filterProjects('content')">Content Creation</button>
+    <button class="filter-btn" onclick="filterProjects('design')">Graphic Design</button>
+    <button class="filter-btn" onclick="filterProjects('web')">Web Development</button>
+  </div>
   <div class="projects-grid">
-    <div class="project-card">
-      <div class="project-image">🏆</div>
+    <div class="project-card" data-category="web">
+      <div class="project-media">
+        <video class="project-video" poster="/assets/website.jpg">
+          <source src="/assets/basketball.mp4" type="video/mp4" />
+        </video>
+        <div class="play-overlay">
+          <img src="/assets/website.JPG" alt="LeBron" class="overlay-lebron" />
+          <span class="play-icon">▶</span>
+        </div>
+        <button class="fullscreen-btn" onclick="toggleFullscreen(this)" title="Fullscreen">⛶</button>
+      </div>
       <div class="project-info">
         <h3>Athlete Portfolio Website</h3>
         <p>Full-stack portfolio website for a professional athlete, featuring dynamic content and modern animations.</p>
@@ -182,8 +197,17 @@
         </div>
       </div>
     </div>
-    <div class="project-card">
-      <div class="project-image">📱</div>
+    <div class="project-card" data-category="content design">
+      <div class="project-media">
+        <video class="project-video" poster="/assets/me.jpeg">
+          <source src="/assets/3 vs 3.mp4" type="video/mp4" />
+        </video>
+        <div class="play-overlay">
+          <img src="/assets/lebron.jpg" alt="LeBron" class="overlay-me" />
+          <span class="play-icon">▶</span>
+        </div>
+        <button class="fullscreen-btn" onclick="toggleFullscreen(this)" title="Fullscreen">⛶</button>
+      </div>
       <div class="project-info">
         <h3>Instagram Reels Package</h3>
         <p>Created engaging visual content and video edits for athlete's social media, increasing engagement by 200%.</p>
@@ -193,8 +217,15 @@
         </div>
       </div>
     </div>
-    <div class="project-card">
-      <div class="project-image">🚀</div>
+    <div class="project-card" data-category="web design">
+      <div class="project-media">
+        <img src="/assets/lebron.jpeg" alt="Business Landing Page" class="project-img" />
+        <div class="play-overlay">
+          <img src="/assets/lebron.jpeg" alt="LeBron" class="overlay-lebron" />
+          <span class="play-icon">▶</span>
+        </div>
+        <button class="fullscreen-btn" onclick="toggleFullscreen(this)" title="Fullscreen">⛶</button>
+      </div>
       <div class="project-info">
         <h3>Business Landing Page</h3>
         <p>High-converting landing page with modern design, smooth animations, and optimized performance.</p>
@@ -321,21 +352,21 @@
           <div class="contact-icon">📧</div>
           <div>
             <h4>Email</h4>
-            <a href="mailto:yourmail@email.com">yourmail@email.com</a>
+            <a href="mailto:yourmail@email.com">youssefboukhmiss44@gmail.com</a>
           </div>
         </div>
         <div class="contact-item">
           <div class="contact-icon">📱</div>
           <div>
             <h4>Instagram</h4>
-            <a href="https://instagram.com/yourhandle" target="_blank">@yourhandle</a>
+            <a href="https://instagram.com/nothinghoops" target="_blank">@nothinghoops</a>
           </div>
         </div>
         <div class="contact-item">
           <div class="contact-icon">💼</div>
           <div>
             <h4>LinkedIn</h4>
-            <a href="#">Connect with me</a>
+            <a href="https://www.linkedin.com/in/youssef-boukhmiss-8285a6342/">Connect with me</a>
           </div>
         </div>
       </div>
