@@ -11,8 +11,17 @@ window.addEventListener('scroll', () => {
 
 // Global filter function used by inline onclick handlers
 window.filterProjects = function (category) {
-  const cards = document.querySelectorAll('.project-card');
   const cat = (category || 'all').toLowerCase();
+  const projectsSection = document.getElementById('projects');
+
+  // If projects aren't on this page, redirect to business page with category preserved
+  if (!projectsSection) {
+    const q = cat && cat !== 'all' ? `?category=${encodeURIComponent(cat)}` : '';
+    window.location.href = `business.html${q}#projects`;
+    return;
+  }
+
+  const cards = document.querySelectorAll('.project-card');
 
   // Toggle active state on buttons
   document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
@@ -45,6 +54,15 @@ window.toggleFullscreen = function (button) {
 
 // Enable click-to-play/pause on videos and keep overlay unobtrusive
 window.addEventListener('DOMContentLoaded', () => {
+  // If a category is provided via URL, apply the filter on load (business page)
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const categoryParam = params.get('category');
+    if (categoryParam) {
+      window.filterProjects(categoryParam);
+    }
+  } catch {}
+
   // Mobile nav toggle
   const menuToggle = document.querySelector('.menu-toggle');
   const navMenu = document.querySelector('.nav-menu');
