@@ -45,6 +45,27 @@ window.toggleFullscreen = function (button) {
 
 // Enable click-to-play/pause on videos and keep overlay unobtrusive
 window.addEventListener('DOMContentLoaded', () => {
+  // Mobile nav toggle
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navMenu = document.querySelector('.nav-menu');
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      menuToggle.classList.toggle('open', isOpen);
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (navMenu.classList.contains('open')) {
+          navMenu.classList.remove('open');
+          menuToggle.classList.remove('open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  }
+
   document.querySelectorAll('.project-media').forEach(media => {
     const video = media.querySelector('video');
     const overlay = media.querySelector('.play-overlay');
