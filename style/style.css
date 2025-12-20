@@ -1071,6 +1071,7 @@ section p {
   justify-content: center;
   opacity: 0;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .overlay-lebron {
@@ -1104,6 +1105,7 @@ section p {
 .play-overlay .play-icon {
   position: relative;
   z-index: 1;
+  pointer-events: auto;
 }
 
 .play-icon {
