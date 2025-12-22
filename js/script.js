@@ -54,6 +54,48 @@ window.toggleFullscreen = function (button) {
 
 // Enable click-to-play/pause on videos and keep overlay unobtrusive
 window.addEventListener('DOMContentLoaded', () => {
+  // Theme setup: saved preference or system default
+  const root = document.documentElement;
+  const THEME_KEY = 'theme.mode.v1';
+  function applyTheme(mode) {
+    if (mode === 'dark') {
+      root.classList.add('dark');
+      root.style.colorScheme = 'dark';
+      const toggle = document.getElementById('themeToggle');
+      if (toggle) toggle.textContent = '☀️';
+    } else {
+      root.classList.remove('dark');
+      root.style.colorScheme = 'light';
+      const toggle = document.getElementById('themeToggle');
+      if (toggle) toggle.textContent = '🌙';
+    }
+  }
+  try {
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    if (savedTheme) {
+      applyTheme(savedTheme);
+    } else {
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(prefersDark ? 'dark' : 'light');
+    }
+  } catch {}
+  const toggleBtn = document.getElementById('themeToggle');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      const isDark = root.classList.contains('dark');
+      const next = isDark ? 'light' : 'dark';
+      applyTheme(next);
+      try { localStorage.setItem(THEME_KEY, next); } catch {}
+    });
+  }
+  // React to system theme changes if user hasn't set a preference
+  try {
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    media.addEventListener('change', (e) => {
+      const saved = localStorage.getItem(THEME_KEY);
+      if (!saved) applyTheme(e.matches ? 'dark' : 'light');
+    });
+  } catch {}
   // If a category is provided via URL, apply the filter on load (business page)
   try {
     const params = new URLSearchParams(window.location.search);
@@ -123,4 +165,188 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  // --- Cart Logic ---
+  const MESSAGE_EMAIL = window.MESSAGE_EMAIL || 'youssefboukhmiss44@gmail.com';
+  const WEBHOOK_URL = window.MESSAGE_WEBHOOK_URL || '';
+  const STORAGE_KEY = 'cart.items.v1';
+
+  const openCartBtn = document.getElementById('openCartBtn');
+  const closeCartBtn = document.getElementById('closeCartBtn');
+  const cartDrawer = document.getElementById('cartDrawer');
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartEmptyEl = document.getElementById('cartEmpty');
+  const cartCountEl = document.getElementById('cartCount');
+  const cartTotalEl = document.getElementById('cartTotal');
+  const confirmBtn = document.getElementById('confirmPurchaseBtn');
+
+  let cart = [];
+
+  function loadCart() {
+    try {
+      cart = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    } catch {
+      cart = [];
+    }
+  }
+
+  function saveCart() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+  }
+
+  function formatCurrency(n) {
+    try {
+      return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(n);
+    } catch {
+      return `$${n.toFixed(2)}`;
+    }
+  }
+
+  function updateCartUI() {
+    // Count
+    const count = cart.reduce((sum, item) => sum + item.qty, 0);
+    if (cartCountEl) cartCountEl.textContent = String(count);
+
+    // Items
+    if (cartItemsEl && cartEmptyEl) {
+      cartItemsEl.innerHTML = '';
+      if (cart.length === 0) {
+        cartEmptyEl.style.display = 'block';
+      } else {
+        cartEmptyEl.style.display = 'none';
+        cart.forEach(item => {
+          const li = document.createElement('li');
+          li.className = 'cart-item';
+          li.innerHTML = `
+            <div class="cart-item-info">
+              <strong>${item.name}</strong>
+              <span>${formatCurrency(item.price)}</span>
+            </div>
+            <div class="cart-item-actions">
+              <button class="qty-btn" data-action="dec" data-id="${item.id}" aria-label="Decrease quantity">−</button>
+              <span class="qty">${item.qty}</span>
+              <button class="qty-btn" data-action="inc" data-id="${item.id}" aria-label="Increase quantity">+</button>
+              <button class="remove-btn" data-action="remove" data-id="${item.id}" aria-label="Remove">✕</button>
+            </div>`;
+          cartItemsEl.appendChild(li);
+        });
+      }
+    }
+
+    // Total
+    const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+    if (cartTotalEl) cartTotalEl.textContent = formatCurrency(total);
+  }
+
+  function addItem(id, name, price) {
+    const existing = cart.find(i => i.id === id);
+    if (existing) {
+      existing.qty += 1;
+    } else {
+      cart.push({ id, name, price: Number(price), qty: 1 });
+    }
+    saveCart();
+    updateCartUI();
+    openCart();
+  }
+
+  function changeQty(id, delta) {
+    const idx = cart.findIndex(i => i.id === id);
+    if (idx >= 0) {
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      saveCart();
+      updateCartUI();
+    }
+  }
+
+  function removeItem(id) {
+    cart = cart.filter(i => i.id !== id);
+    saveCart();
+    updateCartUI();
+  }
+
+  function openCart() {
+    if (cartDrawer) {
+      cartDrawer.classList.add('open');
+      cartDrawer.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  function closeCart() {
+    if (cartDrawer) {
+      cartDrawer.classList.remove('open');
+      cartDrawer.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  function buildMessage() {
+    const lines = [];
+    lines.push('New order confirmed:');
+    cart.forEach(i => lines.push(`- ${i.name} x${i.qty} @ $${i.price}`));
+    const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+    lines.push(`Total: $${total.toFixed(2)}`);
+    lines.push('Customer email (optional): ');
+    return lines.join('\n');
+  }
+
+  async function notifyOwner() {
+    const subject = encodeURIComponent('New Order Confirmation');
+    const body = encodeURIComponent(buildMessage());
+
+    // Try webhook first if provided
+    if (WEBHOOK_URL) {
+      try {
+        await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ subject: 'New Order Confirmation', message: buildMessage(), items: cart })
+        });
+      } catch (e) {
+        // swallow; fallback to mailto below
+      }
+    }
+
+    // Fallback to mailto (opens client)
+    window.location.href = `mailto:${MESSAGE_EMAIL}?subject=${subject}&body=${body}`;
+  }
+
+  function handleConfirm() {
+    if (cart.length === 0) {
+      alert('Your cart is empty.');
+      return;
+    }
+    notifyOwner();
+    alert('Thank you! We sent the order details.');
+  }
+
+  // Wire up events
+  loadCart();
+  updateCartUI();
+
+  document.querySelectorAll('.add-to-cart').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      const name = btn.getAttribute('data-name');
+      const price = Number(btn.getAttribute('data-price'));
+      addItem(id, name, price);
+    });
+  });
+
+  if (openCartBtn) openCartBtn.addEventListener('click', openCart);
+  if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
+  if (confirmBtn) confirmBtn.addEventListener('click', handleConfirm);
+
+  if (cartItemsEl) {
+    cartItemsEl.addEventListener('click', (e) => {
+      const target = e.target;
+      if (!(target instanceof HTMLElement)) return;
+      const id = target.getAttribute('data-id');
+      const action = target.getAttribute('data-action');
+      if (!id || !action) return;
+      if (action === 'inc') changeQty(id, 1);
+      if (action === 'dec') changeQty(id, -1);
+      if (action === 'remove') removeItem(id);
+    });
+  }
 });
