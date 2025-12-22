@@ -104,6 +104,82 @@ window.addEventListener('DOMContentLoaded', () => {
       window.filterProjects(categoryParam);
     }
   } catch {}
+  // --- Product Store & Dynamic Pricing ---
+  const PRODUCTS_KEY = 'products.v1';
+  function loadProducts() {
+    try {
+      const raw = localStorage.getItem(PRODUCTS_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return [
+      {
+        id: 'landing-page',
+        name: 'Landing Page',
+        price: 100,
+        icon: '🚀',
+        subtitle: 'One-page conversion machine',
+        badge: 'Starter',
+        featured: false,
+        guarantee: '✔ 14-day support included',
+        features: ['Conversion-focused layout','Mobile-first performance','Basic analytics setup']
+      },
+      {
+        id: 'brand-kit',
+        name: 'Brand Kit',
+        price: 50,
+        icon: '🎨',
+        subtitle: 'Logo, templates, and guide',
+        badge: 'Most Popular',
+        featured: true,
+        guarantee: '✔ Consistent visuals across touchpoints',
+        features: ['Logo + color + type','Social templates','Usage guide PDF']
+      },
+      {
+        id: 'content-sprint',
+        name: 'Content Sprint',
+        price: 10,
+        icon: '🎬',
+        subtitle: 'Short-form edits that sell',
+        badge: 'Fast Results',
+        featured: false,
+        guarantee: '✔ Ready for IG/Reels/TikTok',
+        features: ['3–5 edited reels','Hooks + captions','Export for platforms']
+      }
+    ];
+  }
+  function saveProducts(products) {
+    try { localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products)); } catch {}
+  }
+
+  function renderPricingGrid() {
+    const grid = document.querySelector('.pricing-grid');
+    if (!grid) return;
+    const products = loadProducts();
+    grid.innerHTML = products.map(p => {
+      const ribbon = p.featured ? '<span class="popular-ribbon">Most Popular</span>' : (p.badge ? `<span class="plan-badge">${p.badge}</span>` : '');
+      const featureList = (p.features || []).map(f => `<li>${f}</li>`).join('');
+      return `
+        <div class="pricing-card${p.featured ? ' featured' : ''}">
+          ${ribbon}
+          <div class="plan-header">
+            <div class="plan-icon">${p.icon || '⭐'}</div>
+            <div class="plan-title">
+              <h3>${p.name}</h3>
+              <p class="plan-subtitle">${p.subtitle || ''}</p>
+            </div>
+          </div>
+          <div class="price-line"><span class="price">$${p.price}</span><span class="price-note">one-time</span></div>
+          <ul class="feature-list">${featureList}</ul>
+          ${p.guarantee ? `<div class="guarantee">${p.guarantee}</div>` : ''}
+          <div class="pricing-actions">
+            <button class="btn btn-primary add-to-cart" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}">Add to Cart</button>
+            <a class="btn btn-secondary" href="mailto:youssefboukhmiss44@gmail.com?subject=${encodeURIComponent(p.name + ' Details')}&body=${encodeURIComponent('Hi Youssef,\n\nCould you share more details on ' + p.name + '?')}">Details</a>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  renderPricingGrid();
 
   // Mobile nav toggle
   const menuToggle = document.querySelector('.menu-toggle');
@@ -349,4 +425,5 @@ window.addEventListener('DOMContentLoaded', () => {
       if (action === 'remove') removeItem(id);
     });
   }
+
 });
