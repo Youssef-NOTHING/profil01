@@ -17,6 +17,7 @@
         <span></span>
         <span></span>
       </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
       <ul class="nav-menu">
         <li><a href="index.html#projects" class="nav-link">Portfolio</a></li>
         <li><a href="index.html#services" class="nav-link">Services</a></li>
@@ -143,34 +144,67 @@
       </div>
       <div class="pricing-grid">
         <div class="pricing-card">
-          <h3>Landing Page</h3>
-          <p class="price">Starting at $499</p>
-          <ul>
+          <span class="plan-badge">Starter</span>
+          <div class="plan-header">
+            <div class="plan-icon">🚀</div>
+            <div class="plan-title">
+              <h3>Landing Page</h3>
+              <p class="plan-subtitle">One-page conversion machine</p>
+            </div>
+          </div>
+          <div class="price-line"><span class="price">$100</span><span class="price-note">one-time</span></div>
+          <ul class="feature-list">
             <li>Conversion-focused layout</li>
             <li>Mobile-first performance</li>
             <li>Basic analytics setup</li>
           </ul>
-          <div class="pricing-cta"><a href="mailto:youssefboukhmiss44@gmail.com?subject=Landing%20Page%20Quote%20Request&body=Hi%20Youssef,%0A%0AI'm%20interested%20in%20a%20conversion-focused%20landing%20page.%20Could%20we%20schedule%20a%20quick%20strategy%20call%3F%0A%0AThanks!" class="btn btn-primary">Get A Quote</a></div>
+          <div class="guarantee">✔ 14-day support included</div>
+          <div class="pricing-actions">
+            <button class="btn btn-primary add-to-cart" data-id="landing-page" data-name="Landing Page" data-price="499">Add to Cart</button>
+            <a class="btn btn-secondary" href="mailto:youssefboukhmiss44@gmail.com?subject=Landing%20Page%20Details&body=Hi%20Youssef,%0A%0ACan%20you%20share%20more%20details%20on%20the%20Landing%20Page%20package%3F">Details</a>
+          </div>
         </div>
         <div class="pricing-card featured">
-          <h3>Brand Kit</h3>
-          <p class="price">Starting at $399</p>
-          <ul>
+          <span class="popular-ribbon">Most Popular</span>
+          <div class="plan-header">
+            <div class="plan-icon">🎨</div>
+            <div class="plan-title">
+              <h3>Brand Kit</h3>
+              <p class="plan-subtitle">Logo, templates, and guide</p>
+            </div>
+          </div>
+          <div class="price-line"><span class="price">$50</span><span class="price-note">one-time</span></div>
+          <ul class="feature-list">
             <li>Logo + color + type</li>
             <li>Social templates</li>
             <li>Usage guide PDF</li>
           </ul>
-          <div class="pricing-cta"><a href="mailto:youssefboukhmiss44@gmail.com?subject=Brand%20Kit%20Inquiry&body=Hi%20Youssef,%0A%0AI'd%20like%20to%20discuss%20a%20brand%20kit%20project.%20Could%20we%20set%20up%20a%20call%3F%0A%0AThanks!" class="btn btn-primary">Start Branding</a></div>
+          <div class="guarantee">✔ Consistent visuals across touchpoints</div>
+          <div class="pricing-actions">
+            <button class="btn btn-primary add-to-cart" data-id="brand-kit" data-name="Brand Kit" data-price="399">Add to Cart</button>
+            <a class="btn btn-secondary" href="mailto:youssefboukhmiss44@gmail.com?subject=Brand%20Kit%20Details&body=Hi%20Youssef,%0A%0AI'd%20like%20to%20learn%20more%20about%20your%20Brand%20Kit%20package.">Details</a>
+          </div>
         </div>
         <div class="pricing-card">
-          <h3>Content Sprint</h3>
-          <p class="price">Starting at $299</p>
-          <ul>
+          <span class="plan-badge">Fast Results</span>
+          <div class="plan-header">
+            <div class="plan-icon">🎬</div>
+            <div class="plan-title">
+              <h3>Content Sprint</h3>
+              <p class="plan-subtitle">Short-form edits that sell</p>
+            </div>
+          </div>
+          <div class="price-line"><span class="price">$10</span><span class="price-note">one-time</span></div>
+          <ul class="feature-list">
             <li>3–5 edited reels</li>
             <li>Hooks + captions</li>
             <li>Export for platforms</li>
           </ul>
-          <div class="pricing-cta"><a href="mailto:youssefboukhmiss44@gmail.com?subject=Content%20Sprint%20Inquiry&body=Hi%20Youssef,%0A%0AI'm%20interested%20in%20a%20content%20sprint.%20Let's%20discuss%20details%20on%20a%20call!%0A%0AThanks!" class="btn btn-primary">Plan A Sprint</a></div>
+          <div class="guarantee">✔ Ready for IG/Reels/TikTok</div>
+          <div class="pricing-actions">
+            <button class="btn btn-primary add-to-cart" data-id="content-sprint" data-name="Content Sprint" data-price="299">Add to Cart</button>
+            <a class="btn btn-secondary" href="mailto:youssefboukhmiss44@gmail.com?subject=Content%20Sprint%20Details&body=Hi%20Youssef,%0A%0ACould%20you%20share%20details%20on%20the%20Content%20Sprint%20package%3F">Details</a>
+          </div>
         </div>
       </div>
     </div>
@@ -405,6 +439,27 @@
     <p>&copy; 2025 I'M NOTHING. All rights reserved.</p>
     <p>Crafted with passion 💜</p>
   </footer>
+
+  <!-- Cart UI -->
+  <div class="cart-drawer" id="cartDrawer" aria-hidden="true" role="dialog" aria-label="Shopping cart">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close" id="closeCartBtn" aria-label="Close cart">✕</button>
+    </div>
+    <div class="cart-body">
+      <ul class="cart-items" id="cartItems"></ul>
+      <div class="cart-empty" id="cartEmpty">Your cart is empty.</div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">Total: <span id="cartTotal">$0</span></div>
+      <button class="btn btn-primary" id="confirmPurchaseBtn">Confirm Purchase</button>
+    </div>
+  </div>
+
+  <button class="cart-fab" id="openCartBtn" aria-label="Open cart">
+    <span class="cart-fab-icon">🛒</span>
+    <span class="cart-fab-count" id="cartCount">0</span>
+  </button>
 
   <script src="js/script.js"></script>
 </body>
