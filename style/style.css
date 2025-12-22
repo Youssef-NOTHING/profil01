@@ -63,6 +63,10 @@
   transition: transform 0.3s ease;
 }
 
+.dark .logo-img {
+  filter: invert(1) hue-rotate(180deg) saturate(0.9);
+}
+
 .logo-img:hover {
   transform: scale(1.05);
 }
